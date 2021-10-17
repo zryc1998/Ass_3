@@ -22,9 +22,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 View view = View.inflate(MainActivity.this, R.layout.time_dialog, null);
-                final NumberPicker numberPickerHour = view.findViewById(R.id.numpicker_hours);
-                numberPickerHour.setMaxValue(23);
-                numberPickerHour.setValue(sharedPreferences.getInt("Hours", 0));
                 final NumberPicker numberPickerMinutes = view.findViewById(R.id.numpicker_minutes);
                 numberPickerMinutes.setMaxValue(59);
                 numberPickerMinutes.setValue(sharedPreferences.getInt("Minutes", 0));
@@ -45,10 +42,9 @@ public class MainActivity extends AppCompatActivity {
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        timeTV.setText(numberPickerHour.getValue() + ":" + numberPickerMinutes.getValue() + ":" + numberPickerSeconds.getValue());
+                        timeTV.setText(numberPickerMinutes.getValue() + ":" + numberPickerSeconds.getValue());
 //                        timeTV.setText(String.format("%1$d:%2$02d:%3$02d", numberPickerHour.getValue(), numberPickerMinutes.getValue(), numberPickerSeconds.getValue()));
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt("Hours", numberPickerHour.getValue());
                         editor.putInt("Minutes", numberPickerMinutes.getValue());
                         editor.putInt("Seconds", numberPickerSeconds.getValue());
                         editor.apply();
