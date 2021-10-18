@@ -2,6 +2,8 @@ package com.example.workouttimer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -9,23 +11,35 @@ import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
+
+    RecyclerView mRecyclerView;
+    ArrayList<TimerList> mTimerList = new ArrayList<>();
+    RecyclerViewAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initTimePicker();
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        mAdapter = new RecyclerViewAdapter(mTimerList);
+        mRecyclerView.setAdapter(mAdapter);
+
     }
 
 
@@ -77,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
         initAddButton(timeTextView);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void initAddButton(EditText timeTextView) {
-        ArrayList<TimerList> timerLists = new ArrayList<>();
         EditText workoutTextView =(EditText)findViewById(R.id.workout_text_view);
         Button addButton = (Button)findViewById(R.id.add_button);
 
@@ -91,15 +105,19 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(),"Workout Name and Time Can Not be Empty", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    TimerList tl = new TimerList(workoutTextView.getText().toString(), timeTextView.getText().toString());
-                    timerLists.add(tl);
+                    String[] timeText;
+                    timeText = timeTextView.getText().toString().split(":");
+                    long milliSecInput = Long.parseLong(timeText[0])*60000 + Long.parseLong(timeText[1])*1000;
+
+                    TimerList tl = new TimerList(workoutTextView.getText().toString(), milliSecInput);
+                    mTimerList.add(tl);
+                    mAdapter.setTimerList(mTimerList);
+                    mAdapter.notifyDataSetChanged();
                 }
-                //test arraylist
-//                Iterator itr = timerLists.iterator();
-//                while(itr.hasNext()) {
-//                    TimerList tl = (TimerList) itr.next();
-//                    System.out.println((tl.name + "=================" + tl.time + "\n"));
-//                }
+//                test arraylist
+                for (TimerList tl : mTimerList) {
+                    System.out.println((tl.name + "=================" + tl.time + "\n"));
+                }
             }
         });
 

@@ -2,9 +2,9 @@ package com.example.workouttimer;
 
 public class TimerList {
     String name;
-    String time;
+    long time;
 
-    TimerList(String name, String time){
+    TimerList(String name, long time){
         this.name = name;
         this.time = time;
     }
@@ -13,7 +13,7 @@ public class TimerList {
         return name;
     }
 
-    protected String getTime(){
+    protected long getTime(){
         return time;
     }
 }
