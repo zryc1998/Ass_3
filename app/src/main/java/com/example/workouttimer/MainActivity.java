@@ -115,9 +115,9 @@ public class MainActivity extends AppCompatActivity {
                     mAdapter.notifyDataSetChanged();
                 }
 //                test arraylist
-                for (TimerList tl : mTimerList) {
-                    System.out.println((tl.name + "=================" + tl.time + "\n"));
-                }
+//                for (TimerList tl : mTimerList) {
+//                    System.out.println((tl.name + "=================" + tl.time + "\n"));
+//                }
             }
         });
 
