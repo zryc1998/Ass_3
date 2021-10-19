@@ -42,7 +42,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initTimePicker();
+        initRecyclerView();
+        initClearButton();
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void initRecyclerView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -53,16 +59,13 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-            if(!mIsAtTop)
-            {
-                mClearButton.setText("Back to top");
-                mClearButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFAB00")));
-            }
+                if(!mIsAtTop)
+                {
+                    mClearButton.setText("Back to top");
+                    mClearButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFAB00")));
+                }
             }
         });
-
-        initClearButton();
-
     }
 
     private void initClearButton() {
@@ -112,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 if (mTimerList.size() == 0) {
-//                    addEmptyView(); // adding empty view instead of the RecyclerView
                     return;
                 }
                 mTimerList.remove(position);
@@ -202,10 +204,6 @@ public class MainActivity extends AppCompatActivity {
                 if (mTimerList.size()>0) {
                     mClearButton.setVisibility(View.VISIBLE);
                 }
-//                test arraylist
-//                for (TimerList tl : mTimerList) {
-//                    System.out.println((tl.name + "=================" + tl.time + "\n"));
-//                }
             }
         });
 

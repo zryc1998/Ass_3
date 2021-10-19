@@ -6,16 +6,23 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:weightSum="100"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     android:background="#000000"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:focusable="true">
 
     <View
+        android:id="@+id/delete_square"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_marginBottom="2dp"
         android:layout_marginTop="2dp"
-        android:background="#FFAB00"/>
+        android:layout_marginBottom="2dp"
+        android:layout_weight="1"
+        android:background="#FFAB00"
+        android:clickable="true"
+        android:focusable="true"
+        android:longClickable="false" />
 
     <TextView
         android:id="@+id/item_workout"
