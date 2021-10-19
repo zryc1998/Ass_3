@@ -72,13 +72,32 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="300dp"
-        android:layout_height="370dp"
+        android:layout_width="298dp"
+        android:layout_height="326dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/workout_text_view"
-        app:layout_constraintVertical_bias="0.505" />
+        app:layout_constraintVertical_bias="0.257" />
+
+    <Button
+        android:id="@+id/clear_button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:backgroundTint="#D50000"
+        android:padding="0dp"
+        android:text="clear"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view"
+        app:layout_constraintVertical_bias="0.102"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
