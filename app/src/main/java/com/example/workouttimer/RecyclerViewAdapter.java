@@ -68,6 +68,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             }
         });
+
+        holder.delete_square.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCountDownTimer.cancel();
+                mTimerList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, mTimerList.size());
+            }
+        });
     }
 
     // the following 2 methods are very important to keep the position right when scrolling
@@ -126,12 +136,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView item_workout;
         private final TextView item_time;
+        private final View delete_square;
 
         private ViewHolder(@NonNull View itemView ) {
             super(itemView);
             item_workout = (TextView) itemView.findViewById(R.id.item_workout);
             item_time = (TextView) itemView.findViewById(R.id.item_time);
-
+            delete_square = (View) itemView.findViewById(R.id.delete_square);
         }
     }
 

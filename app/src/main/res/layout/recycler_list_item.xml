@@ -12,16 +12,21 @@
     android:gravity="center_vertical"
     android:focusable="true">
 
-    <View
+    <TextView
         android:id="@+id/delete_square"
-        android:layout_width="0dp"
+        android:layout_width="12dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_weight="1"
         android:background="#FFAB00"
         android:clickable="true"
         android:focusable="true"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="X"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:longClickable="false" />
 
     <TextView
@@ -43,7 +48,7 @@
 
     <TextView
         android:id="@+id/item_time"
-        android:layout_width="43dp"
+        android:layout_width="57dp"
         android:layout_height="wrap_content"
         android:layout_weight="20"
         android:padding="10dp"
