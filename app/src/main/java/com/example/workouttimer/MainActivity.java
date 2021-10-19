@@ -12,6 +12,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.text.InputType;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     Button mClearButton;
     boolean mStopHandler;
     boolean mIsAtTop;
+    boolean mDoublePress = false;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -206,6 +209,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (mDoublePress) {
+            super.onBackPressed();
+            return;
+        }
+        this.mDoublePress = true;
+        Toast.makeText(this, "Please press BACK again to exit", Toast.LENGTH_SHORT).show();
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mDoublePress=false;
+            }
+        }, 2000);
     }
 }
