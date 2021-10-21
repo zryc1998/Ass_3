@@ -1,5 +1,4 @@
 package com.example.workouttimer;
-
 public class TimerList {
     String name;
     long time;
@@ -12,7 +11,6 @@ public class TimerList {
     protected String getName(){
         return name;
     }
-
     protected long getTime(){
         return time;
     }

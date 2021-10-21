@@ -2,6 +2,7 @@ package com.example.workouttimer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -11,6 +12,7 @@ import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,14 +28,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private final SimpleDateFormat mDateFormat;
     private View mView;
     boolean mIsRunning;
-    boolean mIsPause;
+    boolean mCountDownTimerCreated;
     private CountDownTimer mCountDownTimer;
+    private Context mContext;
 
 
     @SuppressLint("SimpleDateFormat")
     public RecyclerViewAdapter(ArrayList<TimerList> timerList) {
         this.mTimerList = timerList;
-
         this.mDateFormat = new SimpleDateFormat("mm:ss");
         mDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+0"));
 
@@ -72,12 +74,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.delete_square.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCountDownTimer.cancel();
+                if (mCountDownTimerCreated == true) {
+                    mCountDownTimer.cancel();
+                }
                 mTimerList.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, mTimerList.size());
+                reloadMainActivity();
             }
         });
+    }
+
+    private void reloadMainActivity() {
+        if (mTimerList.size() == 0 ){
+            Intent intent =  new Intent(mContext, MainActivity.class);
+            mContext.startActivity(intent);
+        }
     }
 
     // the following 2 methods are very important to keep the position right when scrolling
@@ -91,8 +103,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return position;
     }
 
+
+
     private void startTimer(ViewHolder holder, int position) {
-//        long mEndTime = System.currentTimeMillis() + mTimerList.get(position).getTime();
 
         mCountDownTimer = new CountDownTimer(mTimerList.get(position).getTime(), 1000) {
             @Override
@@ -100,6 +113,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 String minSec = mDateFormat.format(millisUntilFinished);
                         holder.item_time.setTextColor(Color.RED);
                         holder.item_time.setText(minSec);
+                        mCountDownTimerCreated = true;
+
             }
 
             @Override
@@ -108,6 +123,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 holder.item_time.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.item_time.setText("00:00");
                 setOffNotification();
+                mTimerList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, mTimerList.size());
+//                if (mTimerList.size() > 0 ) {
+//                    int p = position;
+//                    if (position == getItemCount()) {
+//                        p = 0;}
+//                    if (p > 0) {
+//                        startTimer(holder, p);
+//                    }
+//                }
+                reloadMainActivity();
             }
         };
         notifyDataSetChanged();
@@ -143,6 +170,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             item_workout = (TextView) itemView.findViewById(R.id.item_workout);
             item_time = (TextView) itemView.findViewById(R.id.item_time);
             delete_square = (View) itemView.findViewById(R.id.delete_square);
+            mContext = itemView.getContext();
         }
     }
 

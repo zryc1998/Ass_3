@@ -25,6 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import com.google.android.material.slider.Slider;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -78,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!mIsAtTop) {
+                    if (mTimerList.size()==0) {
+                        mClearButton.setVisibility(View.INVISIBLE);
+                    }
                     Objects.requireNonNull(mRecyclerView.getLayoutManager()).scrollToPosition(0);
                     mIsAtTop = true;
                     mClearButton.setText("Clear All");
