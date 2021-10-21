@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -20,10 +21,12 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.material.slider.Slider;
 
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     Button mClearButton;
     boolean mStopHandler;
     boolean mIsAtTop;
-    boolean mDoublePress = false;
+    boolean mDoublePress;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -47,10 +50,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initTimePicker();
-        initRecyclerView();
         initClearButton();
+        initRecyclerView();
 
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initRecyclerView() {

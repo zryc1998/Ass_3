@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -120,12 +121,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onFinish() {
                 mIsRunning = false;
-                holder.item_time.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.item_time.setText("00:00");
+//                holder.item_time.setTextColor(Color.parseColor("#FFFFFF"));
                 setOffNotification();
                 mTimerList.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, mTimerList.size());
+
+                // following can be used for future upgrade: timer starts automatically
 //                if (mTimerList.size() > 0 ) {
 //                    int p = position;
 //                    if (position == getItemCount()) {
@@ -134,6 +137,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //                        startTimer(holder, p);
 //                    }
 //                }
+
                 reloadMainActivity();
             }
         };
