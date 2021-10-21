@@ -34,6 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context mContext;
 
 
+
     @SuppressLint("SimpleDateFormat")
     public RecyclerViewAdapter(ArrayList<TimerList> timerList) {
         this.mTimerList = timerList;
@@ -55,10 +56,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
         final TimerList item = mTimerList.get(position);
         holder.item_workout.setText(item.getName());
         holder.item_time.setText(mDateFormat.format(item.getTime()));
-
+        holder.item_time.setTextColor(Color.parseColor("#FFAB00"));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,21 +114,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onTick(long millisUntilFinished) {
                 String minSec = mDateFormat.format(millisUntilFinished);
-                        holder.item_time.setTextColor(Color.RED);
-                        holder.item_time.setText(minSec);
-                        mCountDownTimerCreated = true;
-
+                holder.item_time.setTextColor(Color.RED);
+                holder.item_time.setText(minSec);
+                mCountDownTimerCreated = true;
+                mIsRunning = true;
             }
 
             @Override
             public void onFinish() {
-                mIsRunning = false;
                 holder.item_time.setText("00:00");
-//                holder.item_time.setTextColor(Color.parseColor("#FFFFFF"));
                 setOffNotification();
                 mTimerList.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, mTimerList.size());
+                mIsRunning = false;
 
                 // following can be used for future upgrade: timer starts automatically
 //                if (mTimerList.size() > 0 ) {
@@ -143,8 +144,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         };
         notifyDataSetChanged();
         mCountDownTimer.start();
-
-        mIsRunning = true;
     }
 
 
