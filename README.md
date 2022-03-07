@@ -1,4 +1,3 @@
-# Workout Timer
 Created by Chao Yue (20008378)
 Icon & logo is desgned by Chao Yue
 
